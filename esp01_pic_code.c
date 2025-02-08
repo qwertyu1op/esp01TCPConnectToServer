@@ -1,9 +1,9 @@
 /*Use of AI / Cognitive Assistance Software is not allowed in any evaluation, assessment or exercise.*/
 /*=============================================================================
-	File Name:	ELNC6011Template.c  
-	Author:		Name
-	Date:		DD/MM/YYYY
-	Modified:	Name & date or None
+	File Name:	ELNC6011NihalBrarath.c  
+	Author:		NihalBrarath
+	Date:		08/02/2025
+	Modified:	None
 	© Fanshawe College, 2025
 
 	Description: Describe the purpose of the whole program.  What the 
@@ -35,8 +35,6 @@
 
 // Constants  =================================================================
 
-
-
 #define TRUE 1
 #define FALSE 0
 
@@ -53,15 +51,15 @@
 #define OFFICE_7 0b110
 #define OFFICE_8 0b111
 
-const char atOK[]="AT\n\r";
-const char atRST[]="AT+RST\n\r";
-const char atCWMODE[]="AT+CWMODE=1\n\r";
-const char atCWJAP[]="AT+CWJAP=\"Pixel_8296\",\"nihalbra\"\n\r";
-const char atCWJAP2[]="AT+CWJAP?\n\r";
-const char atCIPSTART[]="AT+CIPSTART=\"TCP\",\"10.35.64.57\",8080\n\r";
-const char atCIPSEND[]="AT+CIPSEND=26\n\r";
-const char atCIPCLOSE[]="AT+CIPCLOSE\n\r";
-const char atCIPSEND2[]="AT+CIPSEND=2\n\r";
+const char atOK[]="AT\n";
+const char atRST[]="AT+RST\n";
+const char atCWMODE[]="AT+CWMODE=1\n";
+const char atCWJAP[]="AT+CWJAP=\"Pixel_8296\",\"nihalbra\"\n";
+const char atCWJAP2[]="AT+CWJAP?\n";
+const char atCIPSTART[]="AT+CIPSTART=\"TCP\",\"10.35.64.57\",8080\n";
+const char atCIPSEND[]="AT+CIPSEND=26\n";
+const char atCIPCLOSE[]="AT+CIPCLOSE\n";
+const char atCIPSEND2[]="AT+CIPSEND=2\n";
 const char atGMR[]="AT+GMR\n\r";
 
 
@@ -73,6 +71,10 @@ void setOscTo16MHZ()
 
 void configAsyncUART()
 {
+	RCONbits.IPEN=TRUE;
+	INTCONbits.GIE=TRUE;
+	PIE1bits.RC1IE=TRUE;
+	
 	//STEP1 SET BAUDRATE 114K
 	SPBRG1H:SPBRGH1=34;
 	TXSTA1bits.BRGH= TRUE;
@@ -103,8 +105,11 @@ void sendUART(char* data)
 		while(!PIR1bits.TX1IF);
 		TXREG1=*data++;
 	}
-	
+//	while(!PIR1bits.RC1IF);
+//	PIR1bits.RC1IF=FALSE;
 }
+
+
 
 
 void sysInit()
@@ -116,13 +121,14 @@ void sysInit()
 
 void connectTCP()
 {
+	sendUART(atOK);
+	
+	
 	
 
-	sendUART(atOK);
-	Delay10TCYx( 2500 );
 	sendUART(atRST);
 	Delay10TCYx( 2500 );
-
+	
 	sendUART(atCWMODE);
 	Delay10TCYx( 2500 );
 	sendUART(atCWJAP);
@@ -157,5 +163,4 @@ void main()
 
 	connectTCP(); 
 
-	
 }
