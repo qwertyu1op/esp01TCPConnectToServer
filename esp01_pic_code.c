@@ -51,16 +51,16 @@
 #define OFFICE_7 0b110
 #define OFFICE_8 0b111
 
-const char atOK[]="AT\n";
-const char atRST[]="AT+RST\n";
-const char atCWMODE[]="AT+CWMODE=1\n";
-const char atCWJAP[]="AT+CWJAP=\"Pixel_8296\",\"nihalbra\"\n";
-const char atCWJAP2[]="AT+CWJAP?\n";
-const char atCIPSTART[]="AT+CIPSTART=\"TCP\",\"10.35.64.57\",8080\n";
-const char atCIPSEND[]="AT+CIPSEND=26\n";
-const char atCIPCLOSE[]="AT+CIPCLOSE\n";
-const char atCIPSEND2[]="AT+CIPSEND=2\n";
-const char atGMR[]="AT+GMR\n\r";
+const char atOK[]="AT\r\n";
+const char atRST[]="AT+RST\r\n";
+const char atCWMODE[]="AT+CWMODE=1\r\n";
+const char atCWJAP[]="AT+CWJAP=\"Pixel_8296\",\"nihalbra\"\r\n";
+const char atCWJAP2[]="AT+CWJAP?\r\n";
+const char atCIPSTART[]="AT+CIPSTART=\"TCP\",\"10.35.64.57\",8080\r\n";
+const char atCIPSEND[]="AT+CIPSEND=26\r\n";
+const char atCIPCLOSE[]="AT+CIPCLOSE\r\n";
+const char atCIPSEND2[]="AT+CIPSEND=2\r\n";
+const char atGMR[]="AT+GMR\r\n";
 
 
 void setOscTo16MHZ()
@@ -102,8 +102,9 @@ void sendUART(char* data)
 	while(*data)
 	{
 		
-		while(!PIR1bits.TX1IF);
+		
 		TXREG1=*data++;
+		while(!PIR1bits.TX1IF);
 	}
 //	while(!PIR1bits.RC1IF);
 //	PIR1bits.RC1IF=FALSE;
