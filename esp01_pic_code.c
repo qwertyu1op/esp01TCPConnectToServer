@@ -101,8 +101,10 @@ void sendUART(char* data)
 {
 	while(*data)
 	{
+		//while(!PIR1bits.TX1IF); may not be as accurate as we think
+		while(!TXSTAbits.TRMT);
 		TXREG1=*data++;
-		while(!PIR1bits.TX1IF);
+		
 	}
 //	while(!PIR1bits.RC1IF);
 //	PIR1bits.RC1IF=FALSE;
