@@ -94,15 +94,13 @@ void configAsyncUART()
 	//RX ENABLE
 	RCSTA1bits.CREN=TRUE;
 	
-	//NOW WHEN WE SEND A BYTE TO TXREG1 THIS WILL TRANSMIT
+	//NOW WHEN WE SEND A BYTE TO TXREG1 THIS WILL TRANSMIT set ansel maybe?
 }
 
 void sendUART(char* data)
 {
 	while(*data)
 	{
-		
-		
 		TXREG1=*data++;
 		while(!PIR1bits.TX1IF);
 	}
@@ -123,10 +121,6 @@ void sysInit()
 void connectTCP()
 {
 	sendUART(atOK);
-	
-	
-	
-
 	sendUART(atRST);
 	Delay10TCYx( 2500 );
 	
